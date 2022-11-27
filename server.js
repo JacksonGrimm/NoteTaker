@@ -19,6 +19,10 @@ app.get("/api/notes", (req, res) => {
   res.json(data);
 });
 
+app.post("/api/notes", (req, res) => {
+  console.log(req.body);
+});
+
 app.listen(PORT, () =>
   console.log(`App listening at http://localhost:${PORT} 🚀`)
 );
