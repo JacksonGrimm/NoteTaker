@@ -54,7 +54,10 @@ app.post("/api/notes", (req, res) => {
       console.log(error);
     }
   });
+  res.json("New Note!");
 });
+
+app.delete("api/notes");
 
 app.listen(PORT, () =>
   console.log(`App listening at http://localhost:${PORT} 🚀`)
