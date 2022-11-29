@@ -1,6 +1,6 @@
 const express = require("express");
 const fs = require("fs");
-const data = require("./db/db.json");
+const util = require("util");
 const path = require("path");
 
 const PORT = 3001;
@@ -11,6 +11,8 @@ app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const readFromFile = util.promisify(fs.readFile);
+
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "./public/index.html"));
 });
@@ -20,7 +22,7 @@ app.get("/notes", (req, res) => {
 });
 
 app.get("/api/notes", (req, res) => {
-  res.json(data);
+  readFromFile("./db/db.json").then((data) => res.json(JSON.parse(data)));
 });
 
 app.post("/api/notes", (req, res) => {
@@ -30,10 +32,10 @@ app.post("/api/notes", (req, res) => {
   let array = [];
   fs.readFile("./db/db.json", "utf8", (error, data) => {
     if (!error) {
-      array = [JSON.parse(data)];
+      array = JSON.parse(data);
       array.push(noteData);
       console.log(array);
-      fs.appendFile("./db/db.json", JSON.stringify(array), function (err) {
+      fs.writeFile("./db/db.json", JSON.stringify(array), function (err) {
         if (err) throw err;
         console.log("Saved!");
       });
