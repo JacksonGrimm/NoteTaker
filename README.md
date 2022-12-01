@@ -26,7 +26,7 @@ just vist the link!
 
 ## Media
 
-NA
+![Alt text](screenshots/screenshot.png "Optional title")
 
 ## Credits
 
@@ -39,7 +39,7 @@ MIT License
 
 ## Application URL
 
-NA
+https://note-taker-express-db.herokuapp.com/notes
 
 ## Questions
 
