@@ -3,14 +3,16 @@ const fs = require("fs");
 const util = require("util");
 const path = require("path");
 
+//port for local and heroku
 const PORT = process.env.PORT || 3001;
 const app = express();
 
+//middleware
 app.use(express.static("public"));
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+//turns readFile into a promise object
 const readFromFile = util.promisify(fs.readFile);
 //random id
 const uuid = () => {
@@ -18,6 +20,8 @@ const uuid = () => {
     .toString(16)
     .substring(1);
 };
+
+//routes
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "./public/index.html"));
 });
@@ -59,6 +63,7 @@ app.post("/api/notes", (req, res) => {
 
 app.delete("api/notes");
 
+//returns port to console.
 app.listen(PORT, () =>
   console.log(`App listening at http://localhost:${PORT} 🚀`)
 );
